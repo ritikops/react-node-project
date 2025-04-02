@@ -1,4 +1,4 @@
-on: 
+on:
   push:
     branches:
       - main
@@ -12,7 +12,7 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-
+      
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
@@ -26,14 +26,13 @@ jobs:
 
   deploy:
     needs: build
-    uses: organization/deployment-repo/.github/workflows/deploy.yml@main  # ✅ Correct placement
+    uses: organization/deployment-repo/.github/workflows/deploy.yml@main
 
   notify:
     needs: deploy
     runs-on: ubuntu-latest
     steps:
-      - name: Slack Notification on Success
-        if: success()
+      - name: Slack Notification
         uses: slackapi/slack-github-action@v1.22.0
         with:
           payload: |
@@ -47,6 +46,7 @@ jobs:
             }
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          SLACK_MESSAGE: "Deployment completed successfully!"
 
       - name: Notify on Failure
         if: failure()
@@ -63,3 +63,4 @@ jobs:
             }
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          SLACK_MESSAGE: "Deployment failed!"
