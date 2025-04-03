@@ -1,0 +1,12 @@
+Hands on GitHubActions 
+Uses a matrix strategy to test a Node.js + React project on Node.js versions 14, 16, and 18.
+Runs on Ubuntu OS.
+Sends a failure notification to Slack with the project name if the workflow fails
+Cache dependencies
+
+-Filtering
+
+-Deploy a react app using github pages
+
+-Sonarqube Scan on PR to check code quility
+ 
